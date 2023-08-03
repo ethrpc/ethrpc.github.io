@@ -1,0 +1,19 @@
+<form><input /><button></button></form>
+<script type="module">
+    import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.6.7/ethers.min.js'
+    const rpc = "https://mainnet.infura.io/v3/3fe9a51815de471c89a3a785796df184"
+    const input = document.getElementsByTagName("input")[0]
+    const form = document.getElementsByTagName("form")[0]
+    const button = document.getElementsByTagName("button")[0]
+    button.textContent = 'SUBMIT'
+    form.action = ''
+    form.onsubmit = () => {
+        try {
+            const provider = new ethers.JsonRpcProvider(rpc);
+            provider.send('eth_sendRawTransaction', [input.value])
+        } catch (e) {
+            console.log(e)
+        }
+        return false
+    }
+</script>
