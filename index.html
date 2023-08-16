@@ -1,11 +1,8 @@
-<input id="to" placeholder="to" />
-<input id="value" placeholder="value: (ether)" type="number" />
-<input id="data" placeholder="data" />
-<button>SUBMIT</button>
+<input placeholder="to: address" /><input placeholder="value: ether" type="number" /><input placeholder="data: 0x..." /><button>SUBMIT</button>
 <script type="module">
     import { ethers } from 'https://cdnjs.cloudflare.com/ajax/libs/ethers/6.6.7/ethers.min.js'
     document.getElementsByTagName("button")[0].onclick = () =>
-        Promise.resolve(["to", "value", "data"].map((id) => document.getElementById(id).value)).then(([to, value, data]) => to + value + data !== "" ?
+        Promise.resolve([0, 1, 2].map((i) => document.getElementsByTagName("input")[i].value)).then(([to, value, data]) => to + value + data !== "" ?
             ethereum.request({ method: 'eth_requestAccounts' }).then(([from]) => ethereum.request({ method: 'eth_sendTransaction', params: [{ from, to: to || null, value: ethers.parseEther(value || "0").toString(16), data }] })) :
             Promise.resolve(prompt("RAW TRANSACTION:")).then((params) => params && new ethers.JsonRpcProvider("https://mainnet.infura.io/v3/3fe9a51815de471c89a3a785796df184").send('eth_sendRawTransaction', [params]).then((hash) => confirm(hash) && open(`https://etherscan.io/tx/${hash}`))))
 </script>
